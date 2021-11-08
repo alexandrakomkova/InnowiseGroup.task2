@@ -6,8 +6,11 @@ require 'curb'
 require 'nokogiri'
 
 require_relative 'parse'
+require_relative 'work_with_yaml'
 
 Parse.parse('https://www.petsonic.com/farmacia-para-gatos/', 'parsingProducts.csv')
+
+
 =begin
 get_info_about_product(html)[2].each_with_index do |weight, index|
       work_with_parsed_data(get_info_about_product(html)[0],
