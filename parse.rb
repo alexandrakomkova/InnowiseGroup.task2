@@ -29,7 +29,7 @@ module Parse
 
   def parse(url, filename)
     WorkWithCSV.create_file(filename)
-    product_per_page = 25
+    product_per_page = WorkWithYaml.read_parameters[2]
     count_products = WorkWithUrl.get_html(url).xpath('//input[@id = "nb_item_bottom"]/@value').text.to_i
     count_pages = (count_products / product_per_page.to_f).ceil
     (1..count_pages).each do |p_counter|

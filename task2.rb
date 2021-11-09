@@ -8,7 +8,7 @@ require 'nokogiri'
 require_relative 'parse'
 require_relative 'work_with_yaml'
 
-Parse.parse('https://www.petsonic.com/farmacia-para-gatos/', 'parsingProducts.csv')
+Parse.parse(WorkWithYaml.read_parameters[1], WorkWithYaml.read_parameters[0])
 
 
 =begin

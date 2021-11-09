@@ -4,10 +4,10 @@
 module WorkWithCSV
   def self.create_file(filename)
     CSV.open(filename, 'w')
-    WorkWithCSV.set_headers_to_file(filename)
+    WorkWithCSV.write_headers_to_file(filename)
   end
 
-  def self.set_headers_to_file(filename)
+  def self.write_headers_to_file(filename)
     headers = %w[name price image]
     CSV.open(filename, 'a+') do |row|
       row << headers
@@ -21,4 +21,3 @@ module WorkWithCSV
     puts "-----product #{product_name.strip} is written-----\n\n"
   end
 end
-
