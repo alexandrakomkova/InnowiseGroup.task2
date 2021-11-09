@@ -39,15 +39,15 @@ module Parse
   end
 
   def set_count_products_to_parse(count_products, p_counter, product_per_page, url)
+    threads = []
     url = WorkWithUrl.form_page_url(url, p_counter) if p_counter > 1
-    if count_products < product_per_page
-      Parse.parse_one_page(count_products, url)
-    else
-      Parse.parse_one_page(product_per_page, url)
-    end
+    threads << if count_products < product_per_page
+                 Thread.new { Parse.parse_one_page(count_products, url) }
+               else
+                 Thread.new { Parse.parse_one_page(product_per_page, url) }
+               end
+    threads.each(&:join)
   end
 end
-
-
 =begin
 =end
