@@ -49,5 +49,3 @@ module Parse
     threads.each(&:join)
   end
 end
-=begin
-=end
