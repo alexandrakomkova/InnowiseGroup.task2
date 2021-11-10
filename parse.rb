@@ -24,7 +24,7 @@ module Parse
     product_page = WorkWithUrl.get_html(url).xpath('//div[@class = "product-desc display_sd"]//@href')
     threads = []
     (0...count_products).each do |product_counter|
-      threads << Thread.new { Parse.parse_product(product_page[product_counter].to_s.gsub(/\s+/, '')) }
+      threads << Thread.new { parse_product(product_page[product_counter].to_s.gsub(/\s+/, '')) }
     end
     threads.each(&:join)
   end
@@ -41,11 +41,11 @@ module Parse
   end
 
   def set_count_products_to_parse(count_products, p_counter, product_per_page, url)
-    url = WorkWithUrl.form_page_url(url, p_counter) if p_counter > 1
+    url = form_page_url(url, p_counter) if p_counter > 1
     if count_products < product_per_page
-      Parse.parse_one_page(count_products, url)
+      parse_one_page(count_products, url)
     else
-      Parse.parse_one_page(product_per_page, url)
+      parse_one_page(product_per_page, url)
     end
   end
 end
