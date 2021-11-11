@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'work_with_yaml'
 # .rubocop.yml
 class Product
   attr_accessor :name, :price_per_weight, :img, :weight_variation
@@ -12,10 +13,10 @@ class Product
   end
 
   def get_info_about_product(html)
-    product_name = html.xpath('//h1[@class = "product_main_name"]').text
-    product_img = html.xpath('//img[@id = "bigpic"]/@src')
-    product_weight_variation = html.xpath('//span[@class = "radio_label"]')
-    price_per_weight = html.xpath('//span[@class = "price_comb"]')
+    product_name = html.xpath(WorkWithYaml.read_xpath_product_parameters[0]).text
+    product_img = html.xpath(WorkWithYaml.read_xpath_product_parameters[1])
+    product_weight_variation = html.xpath(WorkWithYaml.read_xpath_product_parameters[2])
+    price_per_weight = html.xpath(WorkWithYaml.read_xpath_product_parameters[3])
     [product_name, product_img, product_weight_variation, price_per_weight]
   end
 end

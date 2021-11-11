@@ -21,7 +21,7 @@ module Parse
   end
 
   def parse_one_page(count_products, url)
-    product_page = WorkWithUrl.get_html(url).xpath('//div[@class = "product-desc display_sd"]//@href')
+    product_page = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[0])
     threads = []
     (0...count_products).each do |product_counter|
       threads << Thread.new { parse_product(product_page[product_counter].to_s.gsub(/\s+/, '')) }
@@ -32,7 +32,7 @@ module Parse
   def parse(url, filename)
     WorkWithCSV.create_file(filename)
     product_per_page = WorkWithYaml.read_parameters[2]
-    count_products = WorkWithUrl.get_html(url).xpath('//input[@id = "nb_item_bottom"]/@value').text.to_i
+    count_products = WorkWithUrl.get_html(url).xpath(WorkWithYaml.read_xpath_parse_parameters[1]).text.to_i
     count_pages = (count_products / product_per_page.to_f).ceil
     (1..count_pages).each do |p_counter|
       set_count_products_to_parse(count_products, p_counter, product_per_page, url)
@@ -41,7 +41,7 @@ module Parse
   end
 
   def set_count_products_to_parse(count_products, p_counter, product_per_page, url)
-    url = form_page_url(url, p_counter) if p_counter > 1
+    url = WorkWithUrl.form_page_url(url, p_counter) if p_counter > 1
     if count_products < product_per_page
       parse_one_page(count_products, url)
     else
